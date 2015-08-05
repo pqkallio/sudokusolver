@@ -32,9 +32,14 @@ public class SubgridSolvingController {
 
     public boolean grind() {
         for (Square square : this.SUBGRID.getSolvedSquares(false)) {
+            System.out.println("SQUARE @ " + square.getAbsoluteLocation().toString());
             Set<Integer> unsolved = new TreeSet<>(this.possibleNumbers);
-            unsolved = SetOperations.relativeComplement(unsolved, this.GRID.getNumbersFromASubgridRow(this.SUBGRID.getLocation().getX(), square.getLocation().getX()));
-            unsolved = SetOperations.relativeComplement(unsolved, this.GRID.getNumbersFromASubgridCol(this.SUBGRID.getLocation().getY(), square.getLocation().getY()));
+            System.out.println("Possible numbers in the square: " + unsolved);
+            unsolved = SetOperations.relativeComplement(unsolved, this.GRID.getNumbersFromASubgridRow(this.SUBGRID.getLocation().getY(), square.getLocation().getY()));
+            System.out.println("Possible numbers without found in the same row: " + unsolved);
+            unsolved = SetOperations.relativeComplement(unsolved, this.GRID.getNumbersFromASubgridCol(this.SUBGRID.getLocation().getX(), square.getLocation().getX()));
+            System.out.println("Possible numbers without found in the same col: " + unsolved);
+            
             if (unsolved.size() == 1) {
                 square.setNumber((Integer)unsolved.toArray()[0]);
                 return true;

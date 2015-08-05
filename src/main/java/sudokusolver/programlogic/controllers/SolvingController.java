@@ -6,6 +6,7 @@
 package sudokusolver.programlogic.controllers;
 
 import sudokusolver.programlogic.domain.Grid;
+import java.util.Scanner;
 
 /**
  *
@@ -19,10 +20,16 @@ public class SolvingController {
     }
     
     public boolean grind() {
+        Scanner scanner = new Scanner(System.in);
+        int i = 1;
         while (!this.GRID.isSolved()) {
+            System.out.println("Round " + i);
             GridSolvingController gsc = new GridSolvingController(this.GRID);
             gsc.grind();
-            if (gsc.progress()) return false;
+            GRID.print();
+            scanner.nextLine();
+            i++;
+            if (!gsc.progress()) return false;
         }
         
         return true;

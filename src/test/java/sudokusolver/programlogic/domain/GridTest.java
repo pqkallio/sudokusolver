@@ -81,7 +81,7 @@ public class GridTest {
     }
     
     @Test
-    public void testGetNumbersFromASubgridPt2() {
+    public void testGetNumbersFromASubgridRowPt2() {
         Set<Integer> rowNumbers = grid.getNumbersFromASubgridRow(1, 1);
         
         assertEquals(rowNumbers.size(), 0);

@@ -22,7 +22,7 @@ public class Main {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        int[] numbers = {-1, -1, -1,  3,  5, -1, -1,  2,  7,
+        int[] easy1 = {-1, -1, -1,  3,  5, -1, -1,  2,  7,
                           5,  8, -1,  2, -1,  6,  1, -1, -1,
                           3, -1, -1,  7,  8,  9,  5, -1, -1,
                          -1, -1, -1, -1, -1, -1, -1, -1, -1,
@@ -32,20 +32,32 @@ public class Main {
                          -1,  7, -1,  3,  6, -1,  9, -1, -1,
                          -1, -1, -1,  8, -1,  5, -1,  1, -1};
         
-        Grid grid = new Grid(numbers);
+        int[] hard1 = {-1,2,-1,4,-1,-1,8,5,-1,
+                       -1,-1,-1,-1,-1,2,7,-1,-1,
+                       -1,-1,8,-1,1,-1,9,-1,-1,
+                       -1,6,-1,-1,4,-1,7,8,5,
+                       -1,9,4,-1,-1,-1,1,2,-1,
+                       3,7,5,-1,8,-1,-1,6,-1,
+                       -1,-1,4,-1,3,-1,6,-1,-1,
+                       -1,-1,6,5,-1,-1,-1,-1,-1,
+                       -1,9,3,-1,-1,1,-1,5,-1};
         
-        for (int i = 0; i < 3; i++) {
-            for (int j = 0; j < 3; j++) {
-                List<Square> squares = grid.getSquaresFromASubgridRow(i, j);
-                for (Square sq : squares) {
-                    if (sq.getNumber() == -1) {
-                        System.out.print("*");
-                    } else {
-                        System.out.print(sq.getNumber());
-                    }
-                }
-                System.out.println("");
-            }
-        }
+        int[] hardest = {8,-1,-1,-1,-1,3,-1,7,-1,
+                          -1,-1,-1,6,-1,-1,-1,9,-1,
+                          -1,-1,-1,-1,-1,-1,2,-1,-1,
+                          -1,5,-1,-1,-1,-1,-1,-1,-1,
+                          -1,-1,7,-1,4,5,1,-1,-1,
+                          -1,-1,-1,7,-1,-1,-1,3,-1,
+                          -1,-1,1,-1,-1,8,-1,9,-1,
+                          -1,-1,-1,5,-1,-1,-1,-1,-1,
+                          -1,6,8,-1,1,-1,4,-1,-1};
+        
+        Grid grid = new Grid(hard1);
+        
+        SolvingController sc = new SolvingController(grid);
+        grid.print();
+        
+        if (sc.grind()) System.out.println("Yeah!");
+        else System.out.println("Buu!");
     }
 }

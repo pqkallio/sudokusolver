@@ -139,4 +139,19 @@ public class Grid implements Solvable {
         Collections.sort(squaresFromARow);
         return squaresFromARow;
     }
+
+    public void print() {
+        for (int i = 0; i < 3; i++) {
+            for (int j = 0; j < 3; j++) {
+                for (Square sq : getSquaresFromASubgridRow(i, j)) {
+                    if (sq.getNumber() == -1) {
+                        System.out.print("*");
+                    } else {
+                        System.out.print(sq.getNumber());
+                    }
+                }
+                System.out.println();
+            }
+        }
+    }
 }
