@@ -49,7 +49,7 @@ public class Square implements Solvable, Comparable<Square> {
     }
     
     public void setPossibilities(Set<Integer> possibilities) {
-        this.possibilities = possibilities;
+        this.possibilities = new TreeSet<>(possibilities);
     }
 
     @Override

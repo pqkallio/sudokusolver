@@ -21,8 +21,10 @@ public class SubgridSolvingController {
     private Set<Integer> possibleNumbers;
     private final Grid GRID;
     private final Subgrid SUBGRID;
+    private Square squareWithLeastPossibilities;
     
     public SubgridSolvingController(Grid grid, Subgrid subgrid) {
+        this.squareWithLeastPossibilities = subgrid.getSolvedSquares(false).get(0);
         this.GRID = grid;
         this.SUBGRID = subgrid;
         this.possibleNumbers = new TreeSet<>();
@@ -32,20 +34,34 @@ public class SubgridSolvingController {
 
     public boolean grind() {
         for (Square square : this.SUBGRID.getSolvedSquares(false)) {
-            System.out.println("SQUARE @ " + square.getAbsoluteLocation().toString());
+//            System.out.println("SQUARE @ " + square.getAbsoluteLocation().toString());
             Set<Integer> unsolved = new TreeSet<>(this.possibleNumbers);
-            System.out.println("Possible numbers in the square: " + unsolved);
+//            System.out.println("Possible numbers in the square: " + unsolved);
             unsolved = SetOperations.relativeComplement(unsolved, this.GRID.getNumbersFromASubgridRow(this.SUBGRID.getLocation().getY(), square.getLocation().getY()));
-            System.out.println("Possible numbers without found in the same row: " + unsolved);
+//            System.out.println("Possible numbers without found in the same row: " + unsolved);
             unsolved = SetOperations.relativeComplement(unsolved, this.GRID.getNumbersFromASubgridCol(this.SUBGRID.getLocation().getX(), square.getLocation().getX()));
-            System.out.println("Possible numbers without found in the same col: " + unsolved);
+//            System.out.println("Possible numbers without found in the same col: " + unsolved);
             
             if (unsolved.size() == 1) {
                 square.setNumber((Integer)unsolved.toArray()[0]);
                 return true;
             }
+            
+            square.setPossibilities(unsolved);
+            checkIfHasLeastPossibilities(square);
         }
         
         return false;
+    }
+
+    private void checkIfHasLeastPossibilities(Square square) {
+        if (square.getPossibilities().size() 
+                < this.squareWithLeastPossibilities.getPossibilities().size()) {
+            this.squareWithLeastPossibilities = square;
+        }
+    }
+
+    public Square getSquareWithLeastPossibilities() {
+        return squareWithLeastPossibilities;
     }
 }

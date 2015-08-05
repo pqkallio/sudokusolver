@@ -154,4 +154,56 @@ public class Grid implements Solvable {
             }
         }
     }
+
+    public List<Subgrid> getSolvedSubgrids(boolean isSolved) {
+        List<Subgrid> subgridList = new ArrayList<>();
+        
+        for (Subgrid subgrid : this.SUBGRIDS.values()) {
+            if (subgrid.isSolved() == isSolved) {
+                subgridList.add(subgrid);
+            }
+        }
+        
+        return subgridList;
+    }
+
+    public int[] getNumbers() {
+        int[] currentNumbers = new int[81];
+        int i = 0;
+        for (Subgrid subgrid : SUBGRIDS.values()) {
+            for (Square square : subgrid.getSquares().values()) {
+                currentNumbers[i] = square.getNumber();
+                i++;
+            }
+        }
+        
+        return currentNumbers;
+    }
+    
+    public void setNumbers(int[] numbers) {
+        int i = 9;
+        int j = 0;
+        List<List<Integer>> lists = new ArrayList<>();
+        for (int y = 0; y < 3; y++) {
+            for (int x = 0; x < 3; x++) {
+                Location loc = new Location(x, y);
+                List<Integer> nums = new ArrayList<>();
+                for (int k = j; k < i; k++) {
+                    nums.add(numbers[k]);
+                }
+                
+                lists.add(nums);
+                
+                i += 9;
+                j += 9;
+            }
+        }
+        
+        i = 0;
+        
+        for (Subgrid sg : this.SUBGRIDS.values()) {
+            sg.setNumbers(lists.get(i));
+            i++;
+        }
+    }
 }

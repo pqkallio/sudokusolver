@@ -6,6 +6,7 @@
 package sudokusolver.programlogic.controllers;
 
 import sudokusolver.programlogic.domain.Grid;
+import sudokusolver.programlogic.domain.Square;
 import sudokusolver.programlogic.domain.Subgrid;
 
 /**
@@ -15,9 +16,11 @@ import sudokusolver.programlogic.domain.Subgrid;
 public class GridSolvingController {
     private final Grid GRID;
     private boolean progress;
+    private Square squareWithLeastPossibilities;
     
     public GridSolvingController(Grid grid) {
         this.GRID = grid;
+        this.squareWithLeastPossibilities = null;
         this.progress = false;
     }
     
@@ -26,9 +29,18 @@ public class GridSolvingController {
             Subgrid sg = this.GRID.getSubgrids().get(i);
             
             if (!sg.isSolved()) {
-                if (new SubgridSolvingController(this.GRID, sg).grind()) {
+                SubgridSolvingController sgsc = new SubgridSolvingController(this.GRID, sg);
+                if (sgsc.grind()) {
                     this.progress = true;
                     i--;
+                }
+                
+                if (!sg.isSolved()) {
+                    if (squareWithLeastPossibilities == null 
+                            || sgsc.getSquareWithLeastPossibilities().getPossibilities().size() 
+                                < squareWithLeastPossibilities.getPossibilities().size()) {
+                        squareWithLeastPossibilities = sgsc.getSquareWithLeastPossibilities();
+                    }
                 }
             }
         }
@@ -38,5 +50,9 @@ public class GridSolvingController {
 
     boolean progress() {
         return this.progress;
+    }
+
+    public Square getSquareWithLeastPossibilities() {
+        return squareWithLeastPossibilities;
     }
 }

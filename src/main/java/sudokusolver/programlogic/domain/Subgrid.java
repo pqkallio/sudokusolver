@@ -29,12 +29,12 @@ public class Subgrid implements Solvable {
         this.LOCATION = location;
         this.GRID = grid;
         this.SQUARES = createSquares(numbers);
-        System.out.println("Subgrid " + this.LOCATION + " squares:");
-        for (Location loc : this.SQUARES.keySet()) {
-            Square sq = this.SQUARES.get(loc);
-            System.out.println("  " + loc + " / " + sq.getAbsoluteLocation() + ": " + sq.getNumber());
-        }
-        System.out.println("**********************");
+//        System.out.println("Subgrid " + this.LOCATION + " squares:");
+//        for (Location loc : this.SQUARES.keySet()) {
+//            Square sq = this.SQUARES.get(loc);
+//            System.out.println("  " + loc + " / " + sq.getAbsoluteLocation() + ": " + sq.getNumber());
+//        }
+//        System.out.println("**********************");
     }
 
     public Location getLocation() {
@@ -52,7 +52,16 @@ public class Subgrid implements Solvable {
     public Square getSquare(int x, int y) {
         return this.SQUARES.get(new Location(x, y));
     }
-
+    
+    public void setNumbers(List<Integer> numbers) {
+        int i = 0;
+        
+        for (Square square : this.SQUARES.values()) {
+            square.setNumber(numbers.get(i));
+            i++;
+        }
+    }
+    
     @Override
     public boolean isSolved() {
         return getSolvedSquares(true).size() == 9;
